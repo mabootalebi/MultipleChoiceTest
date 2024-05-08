@@ -17,6 +17,8 @@ namespace Contracts.DTOs
         public static readonly Status CannotRegisterUserDueToUserWithSameUserNameAlreadyExists = new(StatusTypeEnum.Error, "کاربری با این شناسه کاربری از قبل در سامانه وجود دارد.");
         public static readonly Status ErrorOccuredWhileRegisteringUser = new(StatusTypeEnum.Error, "خطایی در ایجاد کاربر رخ داده است.");
 
+        public static readonly Status IncorrectUsernameOrPassword = new(StatusTypeEnum.Error, "شناسه کاربری و یا رمز عبور صحیح نیست.");
+
         #endregion
     }
 }

@@ -11,11 +11,15 @@ namespace API.Controllers
     {
         private readonly IAuthenticationServices _authenticationServices;
         private readonly ILogger<AuthenticationController> _logger;
+        private readonly IConfiguration _configuration;
 
-        public AuthenticationController(IAuthenticationServices authenticationServices, ILogger<AuthenticationController> logger)
+        public AuthenticationController(IAuthenticationServices authenticationServices, 
+                                        ILogger<AuthenticationController> logger,
+                                        IConfiguration configuration)
         {
             _authenticationServices = authenticationServices;
             _logger = logger;
+            _configuration = configuration;
         }
 
         [HttpPost]
@@ -23,6 +27,21 @@ namespace API.Controllers
         {
             var result = await _authenticationServices.RegisterAsync(registerDto);
             return Ok(result);
-        } 
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Login(LoginDto loginDto)
+        {
+            var jwtDto = new JWTDto
+            {
+                Secret = _configuration["JWT:Secret"]!,
+                Issuer = _configuration["JWT:ValidIssuer"]!,
+                Audience = _configuration["JWT:ValidAudience"]!
+            };
+
+            var result = await _authenticationServices.LoginAsync(loginDto, jwtDto);
+            return Ok(result);
+        }
+
     }
 }
