@@ -18,6 +18,8 @@ namespace Contracts.DTOs
         public static readonly Status ErrorOccuredWhileRegisteringUser = new(StatusTypeEnum.Error, "خطایی در ایجاد کاربر رخ داده است.");
 
         public static readonly Status IncorrectUsernameOrPassword = new(StatusTypeEnum.Error, "شناسه کاربری و یا رمز عبور صحیح نیست.");
+        
+        public static readonly Status UserWithGivenIdNotFound = new(StatusTypeEnum.NotFound, "خطا در بازیابی کاربر.");
 
         #endregion
     }

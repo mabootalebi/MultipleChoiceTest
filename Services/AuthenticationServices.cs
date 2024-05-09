@@ -17,17 +17,14 @@ namespace Services
     {
         private readonly UserManager<User> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly SignInManager<User> _signInManager;
         private readonly ILogger<AuthenticationServices> _logger;
 
         public AuthenticationServices(UserManager<User> userManager,
                                       RoleManager<IdentityRole> roleManager,
-                                      SignInManager<User> signInManager,
                                       ILogger<AuthenticationServices> logger)
         {
             _roleManager = roleManager;
             _userManager = userManager;
-            _signInManager = signInManager;
             _logger = logger;
         }
 

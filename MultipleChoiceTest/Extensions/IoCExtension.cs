@@ -12,6 +12,8 @@ namespace API.Extensions
             builder.Services.AddScoped<UserManager<User>>();
             builder.Services.AddScoped<RoleManager<IdentityRole>>();
             builder.Services.AddScoped<IAuthenticationServices, AuthenticationServices>();
+            builder.Services.AddScoped<IUserServices, UserServices>();
+
         }
 
     }
