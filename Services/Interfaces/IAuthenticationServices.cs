@@ -7,7 +7,7 @@ namespace Services.Interfaces
 {
     public interface IAuthenticationServices
     {
-        Task<ResultDto<List<IdentityError>>> RegisterAsync(RegisterDto model);
+        Task<ResultDto<List<IdentityError>>> RegisterAsync(RegisterDto model, string role);
         Task<ResultDto<LoginResultDto>> LoginAsync(LoginDto loginDto, JWTDto jWTDto);
     }
 }

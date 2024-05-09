@@ -25,7 +25,14 @@ namespace API.Controllers
         [HttpPost]
         public async Task<ActionResult> Register(RegisterDto registerDto)
         {
-            var result = await _authenticationServices.RegisterAsync(registerDto);
+            var result = await _authenticationServices.RegisterAsync(registerDto, UserRolesDto.User);
+            return Ok(result);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> RegisterAdmin(RegisterDto registerDto)
+        {
+            var result = await _authenticationServices.RegisterAsync(registerDto, UserRolesDto.Admin);
             return Ok(result);
         }
 

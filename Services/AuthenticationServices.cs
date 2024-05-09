@@ -31,13 +31,13 @@ namespace Services
             _logger = logger;
         }
 
-        public async Task<ResultDto<List<IdentityError>>> RegisterAsync(RegisterDto model)
+        public async Task<ResultDto<List<IdentityError>>> RegisterAsync(RegisterDto model, string role)
         {
             var userExists = await _userManager.FindByNameAsync(model.UserName);
             if (userExists != null)
                 return new ResultDto<List<IdentityError>> { Status = CustomStatuses.CannotRegisterUserDueToUserWithSameUserNameAlreadyExists };
 
-            User user = new User()
+            var user = new User()
             {
                 SecurityStamp = Guid.NewGuid().ToString(),
                 UserName = model.UserName,
@@ -60,7 +60,26 @@ namespace Services
                 };
             }
 
+            await AddRoles();
+            await AddUserRole(user, role);
+
             return new ResultDto<List<IdentityError>> { Status = CustomStatuses.Success };
+        }
+
+        private async Task AddRoles()
+        {
+            if (!await _roleManager.RoleExistsAsync(UserRolesDto.Admin))
+                await _roleManager.CreateAsync(new IdentityRole(UserRolesDto.Admin));
+            if (!await _roleManager.RoleExistsAsync(UserRolesDto.User))
+                await _roleManager.CreateAsync(new IdentityRole(UserRolesDto.User));
+        }
+
+        private async Task AddUserRole(User user, string role)
+        {
+            if (await _roleManager.RoleExistsAsync(role))
+            {
+                await _userManager.AddToRoleAsync(user, role);
+            }
         }
 
         public async Task<ResultDto<LoginResultDto>> LoginAsync(LoginDto loginDto, JWTDto jWTDto)
