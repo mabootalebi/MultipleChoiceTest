@@ -21,6 +21,8 @@ namespace Contracts.DTOs
         
         public static readonly Status UserWithGivenIdNotFound = new(StatusTypeEnum.NotFound, "خطا در بازیابی کاربر.");
 
+        public static readonly Status ErrorOccuredWhileUpdatingUser = new(StatusTypeEnum.Error, "خطایی در ویرایش اطلاعات کاربر رخ داده است.");
+
         #endregion
     }
 }

@@ -3,11 +3,7 @@ using Contracts.DTOs.User;
 using Domains.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.Json;
 
 namespace Services.Interfaces
 {
@@ -79,11 +75,50 @@ namespace Services.Interfaces
                 NationalCode = user?.NationalCode,
                 PhoneNumber = user?.PhoneNumber
             };
-        
 
-        //public async Task<ResultDto<List<IdentityError>>> UpdateUserInfo()
-        //{
 
-        //}
+        public async Task<ResultDto<List<IdentityError>>> UpdateUserInfoAsync(string id, UpdateDto updateDto)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if (user is null)
+                return new ResultDto<List<IdentityError>>
+                {
+                    Status = CustomStatuses.UserWithGivenIdNotFound,
+                };
+
+            user.FirstName = updateDto.FirstName;
+            user.LastName = updateDto.LastName;
+            user.FatherName = updateDto.FatherName;
+            user.NationalCode = updateDto.NationalCode;
+            user.PhoneNumber = updateDto.PhoneNumber;
+            user.Address = updateDto.Address;
+            user.Email = updateDto.Email;
+
+            var result = await _userManager.UpdateAsync(user);
+            if (!result.Succeeded)
+            {
+                var model = new
+                {
+                    id,
+                    updateDto
+                };
+
+                var serializedInput = JsonSerializer.Serialize(model);
+                var errors = string.Join(" / ", result.Errors.Select(t => $"code: {t.Code}, description: {t.Description}"));
+                _logger.LogError($"Error Occured while Updating user Info. Entered Data: {serializedInput}. ErrorsList: {errors}");
+
+                return new ResultDto<List<IdentityError>>
+                {
+                    Status = CustomStatuses.ErrorOccuredWhileUpdatingUser,
+                    Parameter = result.Errors.ToList()
+                };
+            }
+
+            return new ResultDto<List<IdentityError>>
+            {
+                Status = CustomStatuses.Success,
+            };
+        }
+
     }
 }

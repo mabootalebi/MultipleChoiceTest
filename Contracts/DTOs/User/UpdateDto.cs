@@ -14,7 +14,7 @@ namespace Contracts.DTOs.User
         public string? NationalCode { get; set; }
         [MaxLength(1024)]
         public string? Address { get; set; }
-
+        [EmailAddress]
         public string? Email { get; set; }
         public string? PhoneNumber {  get; set; }
     }

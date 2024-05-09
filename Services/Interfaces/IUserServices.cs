@@ -1,5 +1,6 @@
 ﻿using Contracts.DTOs.User;
 using Contracts.DTOs;
+using Microsoft.AspNetCore.Identity;
 
 
 namespace Services.Interfaces
@@ -8,5 +9,6 @@ namespace Services.Interfaces
     {
         ResultDto<List<FetchDto>> FetchList();
         Task<ResultDto<FetchDto>> FetchByIdAsync(string id);
+        Task<ResultDto<List<IdentityError>>> UpdateUserInfoAsync(string id, UpdateDto updateDto);
     }
 }
