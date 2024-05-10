@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Contracts.DTOs.Test.Question;
 
 namespace Services.Interfaces
 {
@@ -13,5 +14,7 @@ namespace Services.Interfaces
         Task<ResultDto<FetchTestDto>> CreateTestAsync(CreateTestDto dto, CancellationToken cancellationToken = default);
         Task<ResultDto<FetchTestDto>> UpdateTestAsync(int id, CreateTestDto dto, CancellationToken cancellationToken = default);
         Task<ResultDto<List<FetchTestDto>>> FetchTestListAsync(CancellationToken cancellationToken = default);
+
+        Task<ResultDto> CreateTestQuestionAsync(int testId, CreateQuestionDto dto, CancellationToken cancellationToken = default);
     }
 }

@@ -1,13 +1,13 @@
 ﻿using Contracts.DTOs.Authentication;
 using Contracts.DTOs.Test;
+using Contracts.DTOs.Test.Question;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Services.Interfaces;
 
 namespace API.Controllers
 {
-    [Route("api/[controller]/[action]")]
+    [Route("api/[controller]")]
     [Authorize(Roles = UserRolesDto.Admin)]
     [ApiController]
     public class TestCreatorController : ControllerBase
@@ -23,6 +23,7 @@ namespace API.Controllers
         }
 
         [HttpPost]
+        [Route("Create")]
         public async Task<IActionResult> Create(CreateTestDto createDto)
         {
             var result = await _testCreatorServices.CreateTestAsync(createDto);
@@ -30,7 +31,7 @@ namespace API.Controllers
         }
 
         [HttpPut]
-        [Route("{id}")]
+        [Route("Update/{id}")]
         public async Task<IActionResult> Update(int id, CreateTestDto dto)
         {
             var result = await _testCreatorServices.UpdateTestAsync(id, dto);
@@ -38,11 +39,29 @@ namespace API.Controllers
         }
 
         [HttpGet]
+        [Route("FetchTestList")]
         public async Task<IActionResult> FetchTestList()
         {
             var result = await _testCreatorServices.FetchTestListAsync();
             return Ok(result);
         }
+
+
+        [HttpPost]
+        [Route("{testId}/CreateQuestion")]
+        public async Task<IActionResult> CreateQuestion(int id, CreateQuestionDto dto)
+        {
+            var result = await _testCreatorServices.CreateTestQuestionAsync(id, dto);
+            return Ok(result);
+        }
+
+        //[HttpPost]
+        //[Route("{testId}/UpdateQuestion/{questionId}")]
+        //public async Task<IActionResult> UpdateQuestion(int testId, long questionId, CreateQuestionDto dto)
+        //{
+        //    var result = await _testCreatorServices.UpdateTestQuestionAsync(testId, questionId, dto);
+        //    return Ok(result);
+        //}
 
     }
 }

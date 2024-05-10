@@ -1,5 +1,6 @@
 ﻿using Contracts.DTOs;
 using Contracts.DTOs.Test;
+using Contracts.DTOs.Test.Question;
 using Domains.Entities;
 using Domains.RepositoryInterfaces;
 using Microsoft.Extensions.Logging;
@@ -13,11 +14,18 @@ namespace Services
     {
         private readonly ILogger<TestCreatorServices> _logger;
         private readonly ITestRepository _testRepository;
+        private readonly IQuestionRepository _questionRepository;
+        private readonly IChoiceRepository _choiceRepository;
 
-        public TestCreatorServices(ILogger<TestCreatorServices> logger, ITestRepository testRepository)
+        public TestCreatorServices(ILogger<TestCreatorServices> logger, 
+                                   ITestRepository testRepository,
+                                   IQuestionRepository questionRepository,
+                                   IChoiceRepository choiceRepository)
         {
             _logger = logger;
             _testRepository = testRepository;
+            _questionRepository = questionRepository;
+            _choiceRepository = choiceRepository;
         }
 
         public async Task<ResultDto<FetchTestDto>> CreateTestAsync(CreateTestDto dto, CancellationToken cancellationToken = default)
@@ -77,5 +85,82 @@ namespace Services
                 Parameter = list
             };
         }
+
+        public async Task<ResultDto> CreateTestQuestionAsync(int testId, CreateQuestionDto dto, CancellationToken cancellationToken = default)
+        {
+            var test = await _testRepository.FetchByIdAsync(testId, cancellationToken);
+            if (test is null)
+                return new ResultDto
+                {
+                    Status = CustomStatuses.TestNotFound
+                };
+
+            var question = new Question
+            {
+                Description = dto.Description,
+                Order = dto.Order,
+                Test = test,
+                TestId = test.Id
+            };
+
+            var choices = dto.Choices?.Select(t => new Choice
+            {
+                Order = t.Order,
+                Title = t.Title,
+                Score = t.Score,
+                Question = question,
+                QuestionId = question.Id
+            }).ToList();
+
+            await _questionRepository.CreateAsync(question, cancellationToken);
+            await _choiceRepository.CreateRangeAsync(choices, cancellationToken);
+
+            return new ResultDto
+            {
+                Status = CustomStatuses.Success,
+            };
+        }
+
+        //public async Task<ResultDto> UpdateTestQuestionAsync(int testId, long questionId, CreateQuestionDto dto, CancellationToken cancellationToken = default)
+        //{
+        //    var test = await _testRepository.FetchByIdAsync(testId, cancellationToken);
+        //    if (test is null)
+        //        return new ResultDto
+        //        {
+        //            Status = CustomStatuses.TestNotFound
+        //        };
+
+        //    var question = await _questionRepository.FindById(questionId, cancellationToken);
+        //    if (question is null)
+        //        return new ResultDto
+        //        {
+        //            Status = CustomStatuses.QuestionNotFound
+        //        };
+
+        //    var question = new Question
+        //    {
+        //        Description = dto.Description,
+        //        Order = dto.Order,
+        //        Test = test,
+        //        TestId = test.Id
+        //    };
+
+        //    var choices = dto.Choices?.Select(t => new Choice
+        //    {
+        //        Order = t.Order,
+        //        Title = t.Title,
+        //        Score = t.Score,
+        //        Question = question,
+        //        QuestionId = question.Id
+        //    }).ToList();
+
+        //    await _questionRepository.CreateAsync(question, cancellationToken);
+        //    await _choiceRepository.CreateRangeAsync(choices, cancellationToken);
+
+        //    return new ResultDto
+        //    {
+        //        Status = CustomStatuses.Success,
+        //    };
+        //}
     }
 }
