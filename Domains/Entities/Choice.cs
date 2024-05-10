@@ -16,6 +16,6 @@ namespace Domains.Entities
         public int Score { get; set; }
         public int? Order {  get; set; }
 
-        //public virtual ICollection<AnsweredTestDetail>? AnsweredTestDetails { get; set; }
+        public virtual ICollection<AnsweredTestDetail>? AnsweredTestDetails { get; set; }
     }
 }

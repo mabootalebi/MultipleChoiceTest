@@ -1,5 +1,7 @@
 ﻿
 
+using Contracts.DTOs.Test.Question;
+
 namespace Contracts.DTOs.Test
 {
     public class FetchTestDto
@@ -8,6 +10,6 @@ namespace Contracts.DTOs.Test
         public required string Name { get; set; }
         public string? Description { get; set; }
 
-        //list of questions
+        public List<FetchQuestionDto>? Questions { get; set; }
     }
 }

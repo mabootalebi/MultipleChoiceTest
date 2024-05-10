@@ -16,6 +16,7 @@ namespace API.Extensions
             builder.Services.AddScoped<IAuthenticationServices, AuthenticationServices>();
             builder.Services.AddScoped<IUserServices, UserServices>();
             builder.Services.AddScoped<ITestCreatorServices, TestCreatorServices>();
+            builder.Services.AddScoped<IAnswerTestServices, AnswerTestServices>();
             
             
             builder.Services.AddScoped<ITestRepository, TestRepository>();

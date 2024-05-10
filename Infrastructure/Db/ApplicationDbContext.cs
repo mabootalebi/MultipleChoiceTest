@@ -16,8 +16,8 @@ namespace Infrastructure.Db
         //public DbSet<QuestionCategory> QuestionCategories { get; set; }
         public DbSet<Choice> Choices { get; set; }
         public DbSet<Analysis> Analysis { get; set; }
-        //public DbSet<AnsweredTest> AnsweredTests { get; set; }
-        //public DbSet<AnsweredTestDetail> AnsweredTestDetails { get; set; }
+        public DbSet<AnsweredTest> AnsweredTests { get; set; }
+        public DbSet<AnsweredTestDetail> AnsweredTestDetails { get; set; }
 
 
         // remove it if there is no extra config

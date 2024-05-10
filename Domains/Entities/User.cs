@@ -17,6 +17,6 @@ namespace Domains.Entities
         [MaxLength(1024)]
         public string? Address {  get; set; }
 
-        //public virtual ICollection<AnsweredTest>? AnsweredTests { get; set; }
+        public virtual ICollection<AnsweredTest>? AnsweredTests { get; set; }
     }
 }
