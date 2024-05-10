@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using System;
 using System.ComponentModel.DataAnnotations;
 
 
@@ -17,5 +16,7 @@ namespace Domains.Entities
         public string? NationalCode {  get; set; }
         [MaxLength(1024)]
         public string? Address {  get; set; }
+
+        //public virtual ICollection<AnsweredTest>? AnsweredTests { get; set; }
     }
 }

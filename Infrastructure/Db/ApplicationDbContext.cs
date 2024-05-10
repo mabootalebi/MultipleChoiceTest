@@ -10,6 +10,16 @@ namespace Infrastructure.Db
         {
         }
 
+        public DbSet<Test> Tests { get; set; }
+        //public DbSet<Category> Categories { get; set; }
+        public DbSet<Question> Questions { get; set; }
+        //public DbSet<QuestionCategory> QuestionCategories { get; set; }
+        public DbSet<Choice> Choices { get; set; }
+        public DbSet<Analysis> Analysis { get; set; }
+        //public DbSet<AnsweredTest> AnsweredTests { get; set; }
+        //public DbSet<AnsweredTestDetail> AnsweredTestDetails { get; set; }
+
+
         // remove it if there is no extra config
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
