@@ -1,5 +1,6 @@
 ﻿using Domains.Entities;
 using Domains.RepositoryInterfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,15 @@ namespace Infrastructure.Db.Repositories
         {
             _dbContext.Analysis.AddRange(analysis);
             await _dbContext.SaveChangesAsync(cancellationToken);
+        }
+
+        public async Task<Analysis?> FetchAnalysisBasedOnScoreAsync(int testId, int score, CancellationToken cancellationToken = default)
+        {
+            return await _dbContext.Analysis
+                .Where(t => t.TestId == testId && 
+                            t.MinScore<= score && 
+                            t.MaxScore>= score)
+                .FirstOrDefaultAsync(cancellationToken);
         }
     }
 }

@@ -20,11 +20,13 @@ namespace Contracts.DTOs
         public static readonly Status IncorrectUsernameOrPassword = new(StatusTypeEnum.Error, "شناسه کاربری و یا رمز عبور صحیح نیست.");
         
         public static readonly Status UserWithGivenIdNotFound = new(StatusTypeEnum.NotFound, "خطا در بازیابی کاربر.");
+        public static readonly Status UserWithGivenUsernameNotFound = new(StatusTypeEnum.NotFound, "خطا در بازیابی کاربر.");
 
         public static readonly Status ErrorOccuredWhileUpdatingUser = new(StatusTypeEnum.Error, "خطایی در ویرایش اطلاعات کاربر رخ داده است.");
 
         public static readonly Status TestNotFound = new(StatusTypeEnum.Error, "خطایی در بازیابی آزمون رخ داده است.");
         public static readonly Status QuestionNotFound = new(StatusTypeEnum.Error, "خطایی در بازیابی سوال رخ داده است.");
+        public static readonly Status ChoiceNotFound = new(StatusTypeEnum.Error, "خطایی در بازیابی گزینه سوال رخ داده است.");
 
         #endregion
     }

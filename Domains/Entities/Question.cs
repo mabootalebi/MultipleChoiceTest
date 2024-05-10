@@ -16,7 +16,6 @@ namespace Domains.Entities
 
         //public virtual ICollection<QuestionCategory>? QuestionCategories { get; set; }
         public virtual ICollection<Choice>? Choices { get; set; }
-        //public virtual ICollection<AnsweredTestDetail>? AnsweredTestDetails { get; set; }
 
     }
 }

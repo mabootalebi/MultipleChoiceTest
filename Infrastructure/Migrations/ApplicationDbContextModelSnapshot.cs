@@ -50,7 +50,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("TestId");
 
-                    b.ToTable("Analysis");
+                    b.ToTable("Analysis", (string)null);
                 });
 
             modelBuilder.Entity("Domains.Entities.AnsweredTest", b =>
@@ -80,7 +80,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AnsweredTests");
+                    b.ToTable("AnsweredTests", (string)null);
                 });
 
             modelBuilder.Entity("Domains.Entities.AnsweredTestDetail", b =>
@@ -106,7 +106,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("ChoiceId");
 
-                    b.ToTable("AnsweredTestDetail");
+                    b.ToTable("AnsweredTestDetail", (string)null);
                 });
 
             modelBuilder.Entity("Domains.Entities.Choice", b =>
@@ -138,7 +138,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("QuestionId");
 
-                    b.ToTable("Choices");
+                    b.ToTable("Choices", (string)null);
                 });
 
             modelBuilder.Entity("Domains.Entities.Question", b =>
@@ -167,7 +167,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("TestId");
 
-                    b.ToTable("Questions");
+                    b.ToTable("Questions", (string)null);
                 });
 
             modelBuilder.Entity("Domains.Entities.Test", b =>
@@ -192,7 +192,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tests");
+                    b.ToTable("Tests", (string)null);
                 });
 
             modelBuilder.Entity("Domains.Entities.User", b =>

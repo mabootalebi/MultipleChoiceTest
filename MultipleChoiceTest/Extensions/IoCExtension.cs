@@ -23,6 +23,8 @@ namespace API.Extensions
             builder.Services.AddScoped<IChoiceRepository, ChoiceRepository>();
             builder.Services.AddScoped<IQuestionRepository, QuestionRepository>();
             builder.Services.AddScoped<IAnalysisRepository, AnalysisRepository>();
+            builder.Services.AddScoped<IAnsweredTestRepository, AnsweredTestRepository>();
+            builder.Services.AddScoped<IAnsweredTestDetailRepository, AnsweredTestDetailRepository>();
 
         }
 

@@ -1,5 +1,6 @@
 ﻿using Domains.Entities;
 using Domains.RepositoryInterfaces;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace Infrastructure.Db.Repositories
@@ -16,5 +17,19 @@ namespace Infrastructure.Db.Repositories
             await _dbContext.SaveChangesAsync(cancellationToken);
         }
 
+        public async Task<int> CalculateScoreAsync(List<long> selectedChoices, CancellationToken cancellationToken = default)
+        {
+            return await _dbContext.Choices
+                .Join(selectedChoices,
+                      ch => ch.Id,
+                      selected => selected,
+                      (ch, selected) => ch.Score)
+                .SumAsync(cancellationToken);
+        }
+
+        public async Task<Choice?> FetchByIdAsync(long id, CancellationToken cancellationToken = default)
+        {
+            return await _dbContext.Choices.Where(t => t.Id == id).FirstOrDefaultAsync();
+        }
     }
 }
