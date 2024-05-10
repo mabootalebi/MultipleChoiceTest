@@ -3,9 +3,10 @@ using Contracts.DTOs.User;
 using Domains.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
+using Services.Interfaces;
 using System.Text.Json;
 
-namespace Services.Interfaces
+namespace Services
 {
     public class UserServices : IUserServices
     {
@@ -31,17 +32,17 @@ namespace Services.Interfaces
 
                 [
                     .. _userManager.Users.Select(t => new FetchDto
-                                    {
-                                        Id = t.Id,
-                                        Username = t.UserName!,
-                                        Address = t.Address,
-                                        Email = t.Email,
-                                        FatherName = t.FatherName,
-                                        FirstName = t.FirstName,
-                                        LastName = t.LastName,
-                                        NationalCode = t.NationalCode,
-                                        PhoneNumber = t.PhoneNumber
-                                    }),
+                    {
+                        Id = t.Id,
+                        Username = t.UserName!,
+                        Address = t.Address,
+                        Email = t.Email,
+                        FatherName = t.FatherName,
+                        FirstName = t.FirstName,
+                        LastName = t.LastName,
+                        NationalCode = t.NationalCode,
+                        PhoneNumber = t.PhoneNumber
+                    }),
                 ]
             };
         }
@@ -58,7 +59,7 @@ namespace Services.Interfaces
             return new ResultDto<FetchDto>
             {
                 Status = CustomStatuses.Success,
-                Parameter = MakeFetchDtoInstance(user)                    ,                
+                Parameter = MakeFetchDtoInstance(user),
             };
         }
 
