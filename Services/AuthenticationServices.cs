@@ -111,7 +111,7 @@ namespace Services
             var token = new JwtSecurityToken(
                 issuer: jWTDto.Issuer,
                 audience: jWTDto.Audience,
-                expires: DateTime.Now.AddHours(2),
+                expires: DateTime.Now.AddHours(24),
                 claims: authClaims,
                 signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
                 );

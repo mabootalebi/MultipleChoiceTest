@@ -1,5 +1,6 @@
 ﻿using Contracts.DTOs;
 using Contracts.DTOs.Test;
+using Contracts.DTOs.Test.Analysis;
 using Contracts.DTOs.Test.Question;
 using Domains.Entities;
 using Domains.RepositoryInterfaces;
@@ -16,16 +17,19 @@ namespace Services
         private readonly ITestRepository _testRepository;
         private readonly IQuestionRepository _questionRepository;
         private readonly IChoiceRepository _choiceRepository;
+        private readonly IAnalysisRepository _analysisRepository;
 
         public TestCreatorServices(ILogger<TestCreatorServices> logger, 
                                    ITestRepository testRepository,
                                    IQuestionRepository questionRepository,
-                                   IChoiceRepository choiceRepository)
+                                   IChoiceRepository choiceRepository,
+                                   IAnalysisRepository analysisRepository)
         {
             _logger = logger;
             _testRepository = testRepository;
             _questionRepository = questionRepository;
             _choiceRepository = choiceRepository;
+            _analysisRepository = analysisRepository;
         }
 
         public async Task<ResultDto<FetchTestDto>> CreateTestAsync(CreateTestDto dto, CancellationToken cancellationToken = default)
@@ -162,5 +166,32 @@ namespace Services
         //        Status = CustomStatuses.Success,
         //    };
         //}
+
+
+        public async Task<ResultDto> CreateTestAnalysisAsync(int testId, CreateAnalysisDto dto, CancellationToken cancellationToken = default)
+        {
+            var test = await _testRepository.FetchByIdAsync(testId, cancellationToken);
+            if (test is null)
+                return new ResultDto
+                {
+                    Status = CustomStatuses.TestNotFound
+                };
+
+            var analysis = new Analysis
+            {
+                Description = dto.Description,
+                MaxScore = dto.MaxScore,
+                MinScore = dto.MinScore,
+                Test = test,
+                TestId = test.Id
+            };
+
+            await _analysisRepository.CreateAsync(analysis, cancellationToken);
+
+            return new ResultDto
+            {
+                Status = CustomStatuses.Success,
+            };
+        }
     }
 }

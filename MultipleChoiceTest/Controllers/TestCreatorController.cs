@@ -1,5 +1,6 @@
 ﻿using Contracts.DTOs.Authentication;
 using Contracts.DTOs.Test;
+using Contracts.DTOs.Test.Analysis;
 using Contracts.DTOs.Test.Question;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -49,9 +50,9 @@ namespace API.Controllers
 
         [HttpPost]
         [Route("{testId}/CreateQuestion")]
-        public async Task<IActionResult> CreateQuestion(int id, CreateQuestionDto dto)
+        public async Task<IActionResult> CreateQuestion(int testId, CreateQuestionDto dto)
         {
-            var result = await _testCreatorServices.CreateTestQuestionAsync(id, dto);
+            var result = await _testCreatorServices.CreateTestQuestionAsync(testId, dto);
             return Ok(result);
         }
 
@@ -62,6 +63,14 @@ namespace API.Controllers
         //    var result = await _testCreatorServices.UpdateTestQuestionAsync(testId, questionId, dto);
         //    return Ok(result);
         //}
+
+        [HttpPost]
+        [Route("{testId}/CreateAnalysis")]
+        public async Task<IActionResult> CreateAnalysis(int testId, CreateAnalysisDto dto)
+        {
+            var result = await _testCreatorServices.CreateTestAnalysisAsync(testId, dto);
+            return Ok(result);
+        }
 
     }
 }
