@@ -1,4 +1,6 @@
 ﻿using Domains.Entities;
+using Domains.RepositoryInterfaces;
+using Infrastructure.Db.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Services;
 using Services.Interfaces;
@@ -13,6 +15,10 @@ namespace API.Extensions
             builder.Services.AddScoped<RoleManager<IdentityRole>>();
             builder.Services.AddScoped<IAuthenticationServices, AuthenticationServices>();
             builder.Services.AddScoped<IUserServices, UserServices>();
+            builder.Services.AddScoped<ITestCreatorServices, TestCreatorServices>();
+            
+            
+            builder.Services.AddScoped<ITestRepository, TestRepository>();
 
         }
 
